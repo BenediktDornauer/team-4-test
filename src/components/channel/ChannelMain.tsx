@@ -1,5 +1,5 @@
 import * as React from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Theme, makeStyles, createStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import SendIcon from "@material-ui/icons/Send";
@@ -13,12 +13,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
 import SettingsIcon from "@material-ui/icons/Settings";
+import Typography from "@material-ui/core/Typography";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import Grid from "@material-ui/core/Grid";
+
 import * as CSS from "csstype";
 //hilfreich: https://codesandbox.io/s/practical-faraday-zmkdm-updated-zmkdm
 
-//MESSAGES
+//MESSAGES - everything for the message scope (writing, sending, message stream...)
 const useStyles = makeStyles(theme => ({
   container: {
     bottom: 0
@@ -41,12 +45,14 @@ const ChatLayout = () => {
 
   var valueMessages = [
     {
-      message: "message 1 asdf asdf ",
+      message:
+        "s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Let",
       color: "#F8F8FF",
       direction: "flex-start"
     },
     {
-      message: "message 1 asdf asdf ",
+      message:
+        "s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Let",
       color: "#B0C4DE",
       direction: "flex-end"
     },
@@ -66,7 +72,7 @@ const ChatLayout = () => {
       <div
         key={i++}
         className={classes.bubble}
-        style={{ background: obj.color }}
+        style={{ background: obj.color, maxWidth: "60%" }}
       >
         {obj.message}
       </div>
@@ -170,7 +176,7 @@ const container: CSS.Properties = {
 
 const InputMessage = () => {
   return (
-    <div>
+    <div style={{ paddingTop: "15px" }}>
       <div style={container}>
         <TextField
           rows={3}
@@ -179,6 +185,7 @@ const InputMessage = () => {
           placeholder="Maximum 4 rows"
           defaultValue="Nachricht"
           variant="outlined"
+          fullWidth={true}
         />
         <IconButton aria-label="delete" color="primary">
           <SendIcon />
@@ -190,54 +197,107 @@ const InputMessage = () => {
   );
 };
 
-//Channels
-const AllChannels = () => {
-  return (
-    <List component="nav" aria-label="secondary mailbox folders">
-      <ListItem button>
-        <ListItemText primary="Channel 1" />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary="Channel 2" />
-      </ListItem>
-      <ListItem button>
-        <ListItemText primary="Channel 3" />
-      </ListItem>
-    </List>
-  );
-};
-
-//COMBINED
-const design = makeStyles(theme => ({
-  container: {
-    display: "flex",
-    justifyContent: "center"
-  },
-  itemChannel: {
-    flexGrow: 1
-  },
-  itemMessages: {
-    flexGrow: 8
-  }
-}));
-
-const ChannelMain = () => {
-  const mainLayout = design();
-
+const MessageScope = () => {
   return (
     <div>
-      <div className={mainLayout.container}>
-        <div className={mainLayout.itemChannel}>
-          <AllChannels />
-        </div>
-        <div className={mainLayout.itemMessages}>
+      <Grid container>
+        <Grid item xs={11}>
+          <ChatLayout />
+          <InputMessage />
+        </Grid>
+        <Grid item xs={1}>
           <div style={{ textAlign: "right" }}>
             <IconButton aria-label="delete" color="primary">
               <SettingsIcon />
             </IconButton>
           </div>
-          <ChatLayout />
-          <InputMessage />
+        </Grid>
+      </Grid>
+    </div>
+  );
+};
+
+//CHANNELS - everything to list the CHANNELS
+const AllChannels = () => {
+  const [chanelType, setChanelType] = React.useState("all");
+  const handlChannelType = (
+    event: React.MouseEvent<HTMLElement>,
+    chanelType: string
+  ) => {
+    setChanelType(chanelType);
+  };
+
+  var channels = [
+    { name: "Channel 1", type: "private" },
+    { name: "Channel 2", type: "private" },
+    { name: "Channel 3", type: "private" }
+  ];
+
+  const listChannels = channels.map((obj, i = 0) => (
+    <ListItem button>
+      <ListItemText primary={obj.name} />
+    </ListItem>
+  ));
+
+  return (
+    <div arial-label="text formatting">
+      <div style={{ textAlign: "center", padding: "10px" }}>
+        <ToggleButtonGroup
+          value={chanelType}
+          exclusive
+          onChange={handlChannelType}
+          color="prigmary"
+          aria-label="outlined primary button group"
+        >
+          <ToggleButton value="all" aria-label="left aligned">
+            All
+          </ToggleButton>
+          <ToggleButton value="private" aria-label="left aligned">
+            Private
+          </ToggleButton>
+          <ToggleButton value="groups" aria-label="left aligned">
+            Groups
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
+      <List component="nav" aria-label="secondary mailbox folders">
+        {listChannels}
+      </List>
+    </div>
+  );
+};
+
+//MAIN - combine CHANNELS and MESSAGES
+const mainDesing = makeStyles(theme => ({
+  containerMain: {
+    display: "flex",
+    justifyContent: "center",
+    minHeight: "80vh"
+  },
+  itemChannels: {
+    flexGrow: 1
+  },
+  itemMessages: {
+    flexGrow: 8,
+    padding: "20px",
+    [theme.breakpoints.down("sm")]: {
+      background: "green"
+    }
+  }
+}));
+
+const ChannelMain = () => {
+  const mainDesign = mainDesing();
+
+  return (
+    <div>
+      <div className={mainDesign.containerMain}>
+        <div className={mainDesign.itemChannels}>
+          <AllChannels />
+        </div>
+        <div className={mainDesign.itemMessages}>
+          <MessageScope />
+          {/*<Divider variant="middle" orientation="vertical" />*/}
         </div>
       </div>
     </div>
