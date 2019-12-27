@@ -7,6 +7,8 @@ import { Login } from "./components/LoginExample/Login";
 import Test from "./components/Test/test";
 import profile from "./profile/profile";
 import ChannelMain from "./components/channel/channelMain";
+import userAdminSettings from "./components/admin/userAdminSettings";
+import Avatar from "@material-ui/core/Avatar";
 
 //https://medium.com/@glweems/simple-navbar-component-using-react-typescript-and-styled-components-54e357e2cbcb
 
@@ -38,7 +40,8 @@ const navigation = {
     { name: "Login", to: "/LoginExample/login" },
     { name: "Channels", to: "/channel/channelMain" },
     { name: "Profile", to: "/profile/profile" },
-    { name: "LogOut", to: "/Test/test" }
+    { name: "LogOut", to: "/Test/test" },
+    { name: "userAdminSettings", to: "/admin/userAdminSettings" }
   ]
 };
 
@@ -65,6 +68,10 @@ class App extends React.Component {
                 <Route path="/footer/footer" component={Footer} />
                 <Route path="/profile/profile" component={profile} />
                 <Route path="/channel/channelMain" component={ChannelMain} />
+                <Route
+                  path="/admin/userAdminSettings"
+                  component={userAdminSettings}
+                />
               </Switch>
             </BrowserRouter>
           </div>

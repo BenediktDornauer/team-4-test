@@ -20,6 +20,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "source-map-loader": "^0.2.4",
+    "react-material-ui-form-validator": "^2.0.9",
+    "mui-datatables": "2.13.3",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
@@ -32,8 +34,11 @@
     "csstype": "^2.6.8",
     "material-ui": "^0.20.2",
     "material-ui-upload": "^1.2.1",
+    "mobx-react": "6.1.4",
+    "mui-datatables": "^2.13.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-material-ui-form-validator": "^2.0.9",
     "react-router-dom": "^5.1.2",
     "styled-components": "^4.4.1"
   }

@@ -114,7 +114,7 @@ export class Login extends React.Component<LoginProperties, LoginState> {
   }
 
   render() {
-    console.log('ExampleLogin')
+    console.log("ExampleLogin");
 
     return (
       <Container component="main" maxWidth="xs">
