@@ -1,30 +1,34 @@
 import * as React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import * as CSS from 'csstype';
+import * as CSS from "csstype";
 import NavBar from "./components/NavBar/navBar";
 import Footer from "./components/footer/footer";
 import { Login } from "./components/LoginExample/Login";
 import Test from "./components/Test/test";
 import profile from "./profile/profile";
-import ChannelMain from "./components/channel/ChannelMain"
+import ChannelMain from "./components/channel/channelMain";
 
 //https://medium.com/@glweems/simple-navbar-component-using-react-typescript-and-styled-components-54e357e2cbcb
 
-const pageStyle: CSS.Properties = {
-  position: 'relative',
-  minHeight : '100vh'
+const container: CSS.Properties = {
+  display: "flex",
+  alignItems: "flex-start"
 };
 
+const pageStyle: CSS.Properties = {
+  position: "relative",
+  minHeight: "100vh"
+};
 
 const contentStyle: CSS.Properties = {
-  paddingBottom: '2.5rem'
+  paddingBottom: "2.5rem"
 };
 
 const footerStyle: CSS.Properties = {
-  position: 'absolute',
-  bottom: '0',
-  height: '2.5rem',
-  width: '100%'
+  position: "absolute",
+  bottom: "0",
+  height: "2.5rem",
+  width: "100%"
 };
 
 //please add the elements you want to link to
@@ -49,7 +53,7 @@ class App extends React.Component {
       <div className="App" style={pageStyle}>
         <div className="content" style={contentStyle}>
           <div className="navigation">
-          <NavBar brand={brand} links={links} />
+            <NavBar brand={brand} links={links} />
           </div>
 
           <div className="main">
@@ -67,7 +71,7 @@ class App extends React.Component {
         </div>
 
         <div className="footer" style={footerStyle}>
-          <Footer></Footer>
+          <Footer />
         </div>
       </div>
     );
